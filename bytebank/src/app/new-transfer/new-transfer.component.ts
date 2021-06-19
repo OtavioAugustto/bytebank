@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-new-transfer',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewTransferComponent implements OnInit {
   constructor() {}
-
+  @Output() withTranser = new EventEmitter<any>();
   valor: number;
   destino: number;
 
@@ -15,7 +16,13 @@ export class NewTransferComponent implements OnInit {
 
   sendTransfer(): void {
     console.log('Solicitada nova transferência');
-    console.log('Valor: ', this.valor);
-    console.log('Valor: ', this.destino);
+    const event = {valor: this.valor , destino: this.destino};
+    this.withTranser.emit(event);
+    this.cleanInputs();
+  }
+
+  cleanInputs(): void{
+    this.valor = 0;
+    this.destino = 0;
   }
 }
