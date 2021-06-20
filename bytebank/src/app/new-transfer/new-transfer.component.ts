@@ -22,7 +22,7 @@ export class NewTransferComponent implements OnInit {
   }
 
   cleanInputs(): void{
-    this.valor = 0;
-    this.destino = 0;
+    this.valor = null;
+    this.destino = null;
   }
 }
