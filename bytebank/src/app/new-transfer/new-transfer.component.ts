@@ -1,5 +1,6 @@
+import { Transferencia } from './../services/models/transfers.model';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
+import { TransferService } from '../services/transfer.service';
 
 @Component({
   selector: 'app-new-transfer',
@@ -7,7 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./new-transfer.component.scss'],
 })
 export class NewTransferComponent implements OnInit {
-  constructor() {}
+  constructor(private service: TransferService) {}
   @Output() withTranser = new EventEmitter<any>();
   valor: number;
   destino: number;
@@ -16,13 +17,18 @@ export class NewTransferComponent implements OnInit {
 
   sendTransfer(): void {
     console.log('Solicitada nova transferência');
-    const event = {valor: this.valor , destino: this.destino};
-    this.withTranser.emit(event);
-    this.cleanInputs();
+    const event: Transferencia = { valor: this.valor, destino: this.destino };
+    this.service.addTransfer(event)
+    .subscribe((result) => {
+      console.log(result);
+      this.cleanInputs();
+    },
+      (error) => console.error(error)
+    );
   }
 
-  cleanInputs(): void{
-    this.valor = null;
-    this.destino = null;
+  cleanInputs(): void {
+    this.valor = 0 ;
+    this.destino = 0;
   }
 }
