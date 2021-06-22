@@ -1,6 +1,7 @@
 import { Transferencia } from './../services/models/transfers.model';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TransferService } from '../services/transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-transfer',
@@ -8,7 +9,7 @@ import { TransferService } from '../services/transfer.service';
   styleUrls: ['./new-transfer.component.scss'],
 })
 export class NewTransferComponent implements OnInit {
-  constructor(private service: TransferService) {}
+  constructor(private service: TransferService, private router: Router) {}
   @Output() withTranser = new EventEmitter<any>();
   valor: number;
   destino: number;
@@ -22,6 +23,7 @@ export class NewTransferComponent implements OnInit {
     .subscribe((result) => {
       console.log(result);
       this.cleanInputs();
+      this.router.navigateByUrl('extract');
     },
       (error) => console.error(error)
     );
